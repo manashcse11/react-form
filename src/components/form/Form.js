@@ -7,11 +7,13 @@ class Form extends Component {
         this.state = {
             formControls: {
                 name: {
-                    value: ''
+                    label: 'Name'
+                    , value: ''
                     , placeholder: 'What is your name'
                 }
                 , amount: {
-                    value: ''
+                    label: 'Amount'
+                    , value: ''
                     , placeholder: 'How much do you want'
                 }
             }
@@ -38,8 +40,8 @@ class Form extends Component {
     render() {
         return (
             <div>
-                <TextInput name="name" placeholder= {this.state.formControls.name.placeholder} value={this.state.formControls.name.value} onChange={this.changeHandler}/>
-                <TextInput name="amount" placeholder= {this.state.formControls.amount.placeholder} value={this.state.formControls.amount.value} onChange={this.changeHandler}/>
+                <TextInput label={this.state.formControls.name.label} name="name" placeholder= {this.state.formControls.name.placeholder} value={this.state.formControls.name.value} onChange={this.changeHandler}/>
+                <TextInput label={this.state.formControls.amount.label} name="amount" placeholder= {this.state.formControls.amount.placeholder} value={this.state.formControls.amount.value} onChange={this.changeHandler}/>
             </div>
         );
     }
