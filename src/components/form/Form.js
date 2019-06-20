@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import TextInput from './TextInput';
+import validate from './validate';
 
 class Form extends Component {
     constructor(props){
@@ -10,11 +11,21 @@ class Form extends Component {
                     label: 'Name'
                     , value: ''
                     , placeholder: 'What is your name'
+                    , valid: false
+                    , touched: false
+                    , validationRules: {
+                        minlength: 3
+                    }
                 }
-                , amount: {
-                    label: 'Amount'
+                , email: {
+                    label: 'Email'
                     , value: ''
-                    , placeholder: 'How much do you want'
+                    , placeholder: 'Email please'
+                    , valid: false
+                    , touched: false
+                    , validationRules: {
+                        minlength: 5
+                    }
                 }
             }
         }
@@ -24,24 +35,22 @@ class Form extends Component {
         const name = event.target.name;
         const value = event.target.value;
 
-        this.setState(
-            {
-                formControls: {
-                    ...this.state.formControls
-                    , [name]: {
-                        ...this.state.formControls[name]
-                        , value
-                    }
-                }
-            }
-        );
+        const oldData = this.state.formControls;
+        const updatedField = oldData[name];
+        updatedField.value = value;
+        updatedField.touched = true;
+        updatedField.valid = validate(value, this.state.formControls[name].validationRules);
+        oldData[name] = updatedField;
+        this.setState({
+            formControls: oldData
+        });
     }
 
     render() {
         return (
             <div>
                 <TextInput label={this.state.formControls.name.label} name="name" placeholder= {this.state.formControls.name.placeholder} value={this.state.formControls.name.value} onChange={this.changeHandler}/>
-                <TextInput label={this.state.formControls.amount.label} name="amount" placeholder= {this.state.formControls.amount.placeholder} value={this.state.formControls.amount.value} onChange={this.changeHandler}/>
+                <TextInput label={this.state.formControls.email.label} name="email" placeholder= {this.state.formControls.email.placeholder} value={this.state.formControls.email.value} onChange={this.changeHandler}/>
             </div>
         );
     }
