@@ -11,8 +11,8 @@ class Form extends Component {
                     label: 'Name'
                     , value: ''
                     , placeholder: 'What is your name'
-                    , valid: false
-                    , touched: false
+                    , valid: 0
+                    , touched: 0
                     , validationRules: {
                         minlength: 3
                     }
@@ -21,8 +21,8 @@ class Form extends Component {
                     label: 'Email'
                     , value: ''
                     , placeholder: 'Email please'
-                    , valid: false
-                    , touched: false
+                    , valid: 0
+                    , touched: 0
                     , validationRules: {
                         minlength: 5
                     }
@@ -38,7 +38,7 @@ class Form extends Component {
         const oldData = this.state.formControls;
         const updatedField = oldData[name];
         updatedField.value = value;
-        updatedField.touched = true;
+        updatedField.touched = 1;
         updatedField.valid = validate(value, this.state.formControls[name].validationRules);
         oldData[name] = updatedField;
         this.setState({
@@ -46,11 +46,29 @@ class Form extends Component {
         });
     }
 
+    formSubmitHandler = () => {
+        console.dir(this.state.formControls);
+    }
+
     render() {
         return (
             <div>
-                <TextInput label={this.state.formControls.name.label} name="name" placeholder= {this.state.formControls.name.placeholder} value={this.state.formControls.name.value} onChange={this.changeHandler}/>
-                <TextInput label={this.state.formControls.email.label} name="email" placeholder= {this.state.formControls.email.placeholder} value={this.state.formControls.email.value} onChange={this.changeHandler}/>
+                <TextInput name="name" 
+                    label={this.state.formControls.name.label}
+                    placeholder= {this.state.formControls.name.placeholder} 
+                    value={this.state.formControls.name.value} 
+                    onChange={this.changeHandler}
+                    touched={this.state.formControls.name.touched}
+                    valid={this.state.formControls.name.valid}/>
+                <TextInput name="email" 
+                    label={this.state.formControls.email.label} 
+                    placeholder= {this.state.formControls.email.placeholder} 
+                    value={this.state.formControls.email.value} 
+                    onChange={this.changeHandler}
+                    touched={this.state.formControls.email.touched}
+                    valid={this.state.formControls.email.valid}/>
+
+                <button type="button" className="btn btn-info" onClick={this.formSubmitHandler}>Submit</button>
             </div>
         );
     }
