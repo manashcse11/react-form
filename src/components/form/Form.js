@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import TextInput from './TextInput';
+import SelectOption from './SelectOption';
 import validate from './validate';
 
 class Form extends Component {
@@ -27,6 +28,22 @@ class Form extends Component {
                     , validationRules: {
                         minlength: 5
                     }
+                }
+                , team: {
+                    label: 'Team'
+                    , value: ''
+                    , placeholder: 'Email please'
+                    , valid: 0
+                    , touched: 0
+                    , validationRules: {
+                        isRequired: 1
+                    }
+                    , options: [
+                        {value: 1, displayValue: 'Egmont'}
+                        , {value: 2, displayValue: 'Moment'}
+                        , {value: 3, displayValue: 'Sunshine'}
+                        , {value: 4, displayValue: 'Block Bonds'}
+                    ]
                 }
             }
         }
@@ -75,6 +92,13 @@ class Form extends Component {
                     onChange={this.changeHandler}
                     touched={this.state.formControls.email.touched}
                     valid={this.state.formControls.email.valid}/>
+                <SelectOption name="team" 
+                    label={this.state.formControls.team.label} 
+                    value={this.state.formControls.team.value} 
+                    onChange={this.changeHandler}
+                    options={this.state.formControls.team.options}
+                    touched={this.state.formControls.team.touched}
+                    valid={this.state.formControls.team.valid}/>
 
                 <button type="button" className="btn btn-info" onClick={this.formSubmitHandler} disabled={!this.state.formIsValid}>Submit</button>
             </div>
