@@ -6,7 +6,8 @@ class Form extends Component {
     constructor(props){
         super(props);
         this.state = {
-            formControls: {
+            formIsValid: 0
+            , formControls: {
                 name: {
                     label: 'Name'
                     , value: ''
@@ -41,8 +42,15 @@ class Form extends Component {
         updatedField.touched = 1;
         updatedField.valid = validate(value, this.state.formControls[name].validationRules);
         oldData[name] = updatedField;
+        
+        let formIsValid = 1;
+        for(let field in oldData){
+            formIsValid = formIsValid && oldData[field].valid;
+        }
+
         this.setState({
-            formControls: oldData
+            formIsValid: formIsValid
+            , formControls: oldData
         });
     }
 
@@ -68,7 +76,7 @@ class Form extends Component {
                     touched={this.state.formControls.email.touched}
                     valid={this.state.formControls.email.valid}/>
 
-                <button type="button" className="btn btn-info" onClick={this.formSubmitHandler}>Submit</button>
+                <button type="button" className="btn btn-info" onClick={this.formSubmitHandler} disabled={!this.state.formIsValid}>Submit</button>
             </div>
         );
     }
